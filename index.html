@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Experiment - 8</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>  
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+    </head>
+    <body class="bg-dark text-white"> 
+        <div class="container-fluid"  ng-app="" >
+            <h1 class="text-center text-primary ">Experiment-8</h1>
+            <div class="d-flex justify-content-center text-center p-3">
+                <div  ng-controller="FrmController" class="row border  col-md-6 p-3">
+                    <h3>Post your Comment </h3>
+                    <form class="border p-3"> 
+                        <textarea ng-model="txtcomment" class="col-sm-10 form-control" placeholder="Enter Comment..." ></textarea> <br><br>
+                        <button ng-click='btn_add()' class="btn bg-secondary text-white">Post Comment</button> 
+                    </form> 
+                        <ul > 
+                            <h4>Comments</h4> 
+                            <li class="com-sm-4 text-start" ng-repeat="comnt in comment"> {{comnt}} <button class="btn bg-secondary text-white m-4" ng-click="remItem($index)">Remove comment</button></li> 
+                        </ul> 
+                    
+                </div>
+            </div>
+            <div class="d-flex justify-content-center  p-3">
+                <div class="row border col-md-4 p-3" ng-controller="CalculatorController"> 
+                    <h3 class="text-center">Calculator</h3>
+                    <form class="col-sm-10 ">
+                        <label for="a">Enter the First Number</label><br>
+                        <input class="form-control" type="number" ng-model="a" id="a" placeholder="Enter number..."><br>
+                        <label for="b">Enter the Second Number</label><br>
+                        <input class="form-control" type="number" ng-model="b" id="b" placeholder="Enter number..."><br>
+                        <div class="col-sm-6 ">
+                            <label for="operator">Operator</label>
+                            <select class="form-select text-center " id='operator' ng-model="operator" ng-init="operator='None'">
+                                <option selected disabled hidden>None</option>
+                                <option >+</option> 
+                                <option>*</option> 
+                                <option>-</option> 
+                                <option>/</option> 
+                            </select> 
+                        </div><br>
+                        <p>{{ result() }}</p> 
+                    </form>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center  p-3">
+                <div class="row border col-md-6 p-3 text-center" ng-controller="ToDoController"> 
+                    <h3>To Do List</h3>
+                    <form class="form-control bg-dark ">
+                        <input class="form-control" ng-model="title" placeholder="Enter task..."><br>
+                        <button class="btn bg-secondary text-white" ng-click="add()">Add</button> 
+                    </form>
+                   <h5 class="pt-4">Tasks Pending:</h5>
+                    <ul class="text-start"> 
+                        <li ng-repeat="t in tasks">{{t}} <button class="btn bg-secondary text-white m-4" ng-click="DoneTask($index)">Remove comment</button></li> 
+                    </ul> 
+                </div>
+            </div>
+           
+            
+        <script type="text/javascript"> 
+        function FrmController($scope) { 
+        $scope.comment = [];
+         $scope.btn_add = function() { 
+        if($scope.txtcomment !=''){ 
+            $scope.comment.push($scope.txtcomment); 
+            $scope.txtcomment = ""; 
+        }}
+        $scope.remItem = function($index) { 
+        $scope.comment.splice($index, 1); 
+        }}
+        
+        function CalculatorController($scope) { 
+        $scope.result = function() { 
+            CalculatorController.renderUnknownOption = angular.noop;
+            if($scope.a !=undefined && $scope.b !=undefined ){
+                    if ($scope.operator == '+') { 
+                    return $scope.a + $scope.b; }
+                    if ($scope.operator == '-') { 
+                    return $scope.a - $scope.b; }
+                    if ($scope.operator == '*') { 
+                    return $scope.a * $scope.b; }
+                    if ($scope.operator == '/') { 
+                    return $scope.a / $scope.b; }
+                    }
+            else{
+                return "Fill Both Fields"
+            }}}
+        function ToDoController($scope){
+            $scope.tasks = [];  
+            $scope.add = function() { 
+                if($scope.title !=''){ 
+                    $scope.tasks.push($scope.title); }
+            }
+            $scope.DoneTask = function($index) { 
+                $scope.tasks.splice($index, 1); 
+            }
+        }
+        </script>  
+    </body>
+</html>
